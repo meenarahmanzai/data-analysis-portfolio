@@ -1,0 +1,159 @@
+---
+title: "Cyclistic Bikes Case Study"
+author: "Meena Rahmanzai"
+date: "2024-12-14"
+output: html_document
+---
+
+# Introduction
+
+I will be conducting an analysis to answer the question "How do annual members and casual riders use Cyclistic bikes differently?" The main objective of this analysis is to help conduct a strategy on how to convert casual riders into annual members.
+
+### First step that needs to be done is to import the data set.
+
+```{r message=FALSE, warning=FALSE}
+{
+  install.packages("readr")
+}
+
+# Load the package
+library(readr)
+
+# Read the CSV file
+my_data <- read_csv("cyclistic_bike_data.csv")
+```
+
+### Now let's preview the data set to see what we're working with.
+
+```{r message=FALSE, warning=FALSE}
+# Let's get a shorter and simpler view of the data
+head(my_data)
+```
+
+### Create new columns
+
+Now that we have our data set imported, we will create new columns that will help us in our analysis. I will take the started_at and ended_at column to create a new column labeled ride_length, which will give us the total length of time for each ride taken.
+
+```{r message=FALSE, warning=FALSE}
+install.packages("dplyr")
+
+# Load the packages
+library(dplyr)
+
+# Add the new column
+my_data <- my_data %>%
+  mutate(ride_length = (ended_at - started_at))
+
+# Convert "ride_length" from factor to numeric so we can run calculations on the data 
+is.factor(my_data$ride_length)
+my_data$ride_length <- as.numeric(as.character(my_data$ride_length))
+is.numeric(my_data$ride_length)
+```
+
+### Now I will create the second column which will be labeled day_of_week. This column will calculate the day of the week that each ride started. Each day will be associated with a number. For example, Sunday = 1, Monday = 2, etc. We will create this column using the started_at column.
+
+```{r message=FALSE, warning=FALSE}
+install.packages("lubridate")
+
+# Let's load the package
+library(lubridate)
+
+# Add the day of week column
+my_data <- my_data %>%
+  mutate(day_of_week = wday(started_at, label = TRUE))
+
+# Convert the days into numbers
+my_data <- my_data %>% 
+  mutate(day_of_week = match(day_of_week, c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")))
+```
+
+### Let's check to make sure the new columns were added
+
+```{r message=FALSE, warning=FALSE}
+head(my_data)
+```
+
+### Let's see how many observations fall under each user type
+
+```{r message=FALSE, warning=FALSE}
+table(my_data$member_casual)
+```
+
+## Remove "bad" data
+
+### The data frame includes a few hundred entries when bikes were taken out of docks and checked for quality by Divvy or ride_length was negative. We will create a new version of the data frame (v2) since data is being removed
+
+```{r message=FALSE, warning=FALSE}
+my_data_v2 <- my_data[!(my_data$start_station_name == "HQ QR" | my_data$ride_length<0),]
+
+# Remove all rows that contains at least one NA value
+my_data_v2 <- na.omit(my_data)
+```
+
+### Descriptive analysis on ride_length (all figures in seconds)
+
+```{r message=FALSE, warning=FALSE}
+summary(my_data_v2$ride_length)
+```
+
+### Compare members and casual users
+
+```{r message=FALSE, warning=FALSE}
+aggregate(my_data_v2$ride_length ~ my_data_v2$member_casual, FUN = mean)
+aggregate(my_data_v2$ride_length ~ my_data_v2$member_casual, FUN = median)
+aggregate(my_data_v2$ride_length ~ my_data_v2$member_casual, FUN = max)
+aggregate(my_data_v2$ride_length ~ my_data_v2$member_casual, FUN = min)
+```
+
+### Analyze rider data by type and weekday
+
+```{r message=FALSE, warning=FALSE}
+my_data_v2 %>%
+  mutate(weekday = wday(started_at, label = TRUE))  %>% #creates weekday field using wday()
+  group_by(member_casual, weekday) %>% #groups by user type and weekday
+  summarise(
+    number_of_rides = n(),
+    average_duration = mean(ride_length) #calculates the number of rides and average duration
+  ) %>%
+  arrange(member_casual, weekday) # sorts                                                                                                 
+```
+
+### Let's visualize the number of rides by rider type
+
+```{r message=FALSE, warning=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+
+my_data_v2 %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(
+  number_of_rides = n(),
+  average_duration = mean(ride_length)
+) %>%
+arrange(member_casual, weekday) %>%
+ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) + 
+geom_col(position = "dodge")
+```
+
+### Let's create a visualization for the average duration
+
+```{r message=FALSE, warning=FALSE}
+my_data_v2 %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n(),
+  average_duration = mean(ride_length)
+) %>%
+arrange(member_casual, weekday) %>%
+ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
+geom_col(position = "dodge")
+```
+
+## Conclusion
+
+Based on our findings, we can conclude that even though there are more member riders than casual, casual riders use our bikes, on average, for a longer period of time. This leads us to believe that casual riders rent our bikes when they go long distances. Casual riders ride more on weekends, whereas member riders ride more mid-week and on Fridays. Based on our findings, here are our top 3 recommendation on how to convert casual riders into members.
+
+1.  Weekend-Specific Discounts: Offer discounts on weekend passes or annual memberships to motivate casual riders to commit to a membership.
+2.  Weekday Discounts: Offer weekday-specific free ride credits during peak commuting hours as part of the membership to encourage casual riders to use the bikes during the week.
+3.  Mileage-Based Rewards: Implement a rewards program that rewards riders for the distance they cover.
