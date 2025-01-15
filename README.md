@@ -7,6 +7,7 @@ I am a social media coordinator with experience leading and executing social med
 This newfound passion led me to pursue a career in data analytics, where I can combine my problem-solving skills with my love for numbers. I hold a Bachelors in Business Administration with a focus in Marketing and a Google Data Analytics Certificate with hands-on experience with key analytics tools.
 
 Contact
+
 Feel free to connect with me:
 
 Email: meena.rahmanzai@yahoo.com
