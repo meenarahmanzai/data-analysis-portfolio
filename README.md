@@ -18,4 +18,4 @@ GitHub: https://github.com/meenarahmanzai
 
 Thank you for visiting my portfolio! 
 
-* a cup of matcha to wish you a wonderful day 🍵 *
+* a cup of matcha to wish you a wonderful day 🍵 •
