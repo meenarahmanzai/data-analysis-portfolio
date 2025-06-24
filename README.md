@@ -2,9 +2,11 @@ Welcome to my data analysis portfolio! This repository showcases various data an
 
 About Me
 
-I am a social media coordinator with experience working on and executing social media campaigns. However, my true passion has always been math. When I was in college, I considered majoring in mathematics but wasn’t sure if it was the right path for me at the time. After years of working in a different field, I realized that my interest in math never faded. Instead, it evolved into something more practical and exciting, working with data.
+I’m a Social Media Coordinator with a background in executing campaigns that blend creativity, strategy, and community engagement. While I’ve enjoyed the creative and strategic aspects of marketing, I’ve always been drawn to the numbers behind the work—analyzing performance, uncovering insights, and making data-informed decisions. In college, I even considered majoring in mathematics, unsure at the time how to connect that passion with a creative career.
 
-This newfound passion led me to pursue a career in data analytics, where I can combine my problem-solving skills with my love for numbers. I hold a Bachelors in Business Administration with a focus in Marketing and a Google Data Analytics Certificate with hands-on experience with key analytics tools.
+Over time, I realized that I don’t have to choose between creativity and data—I can pursue a path that brings them together. This led me to explore data analytics more seriously and earn the Google Data Analytics Certificate, where I built hands-on experience with tools like Excel, SQL, and Tableau. I hold a Bachelor’s degree in Business Administration with a focus in Marketing, and I bring strong analytical problem-solving and decision-making skills to the table.
+
+Now, I’m looking to grow into a role that allows me to blend creativity, strategy, data, and impact using insights to drive meaningful outcomes, tell compelling stories, and shape better experiences for people.
 
 Contact
 
@@ -15,6 +17,8 @@ Email: meena.rahmanzai@yahoo.com
 LinkedIn: https://www.linkedin.com/in/meenarahmanzai/
 
 GitHub: https://github.com/meenarahmanzai
+
+Website: https://meenarahmanzai.my.canva.site/
 
 Thank you for visiting my portfolio! 
 
